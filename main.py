@@ -2,7 +2,6 @@ import pygame
 import neat
 import time
 import os
-import random
 from Bird import Bird
 
 def load_sprite(name):
@@ -10,6 +9,7 @@ def load_sprite(name):
         pygame.image.load(os.path.join("Resources/imgs", name))
     )
 
+FPS = 60
 
 WIN_WIDTH = 500
 WIN_HEIGHT = 800
@@ -28,14 +28,16 @@ def draw_window(window, bird):
 
 def main():
     bird = Bird(BIRD_SPRITES, 200, 200)
+    clock = pygame.time.Clock()
 
     window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
     run = True
     while run:
+        clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-
+        bird.move()
         draw_window(window, bird)
 
     pygame.quit()
